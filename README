@@ -1,0 +1,7 @@
+The Miller-Rabin Primality Test
+
+I implemented this probabilistic algorithm purely as a recreational
+challenge.  The code has big room for improvements; however, it *does* work
+as advertised.
+
+Distributed under the modified BSD license.
