@@ -1,5 +1,5 @@
-The Miller-Rabin Primality Test
-===============================
+The Miller-Rabin Primality Test in C++
+======================================
 
 The Miller-Rabin primality test is a probabilistic algorithm for determining
 if a number is prime or not.
