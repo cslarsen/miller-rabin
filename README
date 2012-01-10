@@ -4,4 +4,11 @@ I implemented this probabilistic algorithm purely as a recreational
 challenge.  The code has big room for improvements; however, it *does* work
 as advertised.
 
+To compile and test it:
+
+$ make clean check
+
+Written by Christian Stigen Larsen, 2012-01-10
+http://csl.sublevel3.org
+
 Distributed under the modified BSD license.

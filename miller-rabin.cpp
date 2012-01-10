@@ -1,7 +1,7 @@
 /*
  * The Miller-Rabin primality test
  *
- * Written on 2012-01-10 by Christian Stigen Larsen
+ * Written by Christian Stigen Larsen, 2012-01-10
  * http://csl.sublevel3.org
  *
  * Distributed under the modified BSD license
@@ -11,20 +11,12 @@
  *        as advertised.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
+#include <stdlib.h> // rand
+#include <stdint.h> // uint64_t
 
 /*
- * Accuracy parameter `k´ of the Miller-Rabin algorithm.
- *
- */
-static const int ACCURACY = 4;
-
-/*
- * Calculate `a^x mod n´ without overflowing by using modular
- * exponentiation.
+ * Calculate `a^x mod n´ by using modular exponentiation, preventing
+ * overflowing in most cases.
  */
 static uint64_t pow_mod(uint64_t a, uint64_t x, uint64_t n)
 {
@@ -39,7 +31,7 @@ static uint64_t pow_mod(uint64_t a, uint64_t x, uint64_t n)
 /*
  * Return an integer between a and b.
  *
- * Note that we use rand() hear, meaning that all its pathological cases
+ * Note that we use rand() here, meaning that all its pathological cases
  * will apply here as well --- i.e., it's slow and not very random --- but
  * should suffice.
  *
@@ -58,7 +50,7 @@ static int rand_between(int a, int b)
  * The running time should be somewhere around O(k log_3 n).
  *
  */
-bool isprime(int n, int k = ACCURACY)
+bool isprime(int n, int k)
 {
   // Must have ODD n greater than THREE
   if ( n==2 || n==3 ) return true;
@@ -91,57 +83,4 @@ LOOP:
 
   // n is *probably* prime
   return true;
-}
-
-/*
- * Return the number of primes less than or equal to n, by virtue of brute
- * force.  There are much faster ways of computing this number, but we'll
- * use it to test the primality function.
- *
- */
-int pi(int n)
-{
-  int r=0, m=2;
-
-  while ( m < n )
-    if ( isprime(m++) ) ++r;
-
-  return r;
-}
-
-int main()
-{
-  /*
-   * Instead of honoring my own advice over at
-   * http://csl.sublevel3.org/c++/#srand_time we'll just go ahead and use
-   * the idiomatic form for initializing the seed. (It doesn't really matter
-   * in this code).
-   */
-  srand(time(0));
-
-  printf(
-    "Calculating pi(n) by using the Miller-Rabin primality test.\n"
-    "\n"
-    "While this is a SLOW way of computing pi(n), we use it to test\n"
-    "the accuracy parameter `k´.\n"
-    "\n"
-    "Note that since this is a probabilistic algorithm, each run can\n"
-    "produce different results.  That is why you might see incorrect\n"
-    "results below, from time to time.\n"
-    "\n"
-    "Written by Christian Stigen Larsen, http://csl.sublevel3.org\n"
-    "\n"
-    "For this run, k = %d\n\n", ACCURACY);
-
-  int expected[] = {0, 4, 25, 168, 1229, 9592};
-
-  for ( int n=1, e=0; n<=100000; n*=10, ++e ) {
-    int primes = pi(n);
-    printf("There are %d primes less than %d", primes, n);
-
-    if ( primes == expected[e] ) printf("\n");
-    else printf(" --- FAIL, expecteded %d\n", expected[e]);
-  }
-
-  return 0;
 }
