@@ -4,10 +4,10 @@ The Miller-Rabin Primality Test in C++
 The Miller-Rabin primality test is a probabilistic algorithm for determining
 if a number is prime or not.
 
-By its probabilistic nature, it runs quite fast --- in O(k log3 n) time ---
+By its probabilistic nature, it runs fast --- in O(k log3 n) time ---
 but there is a chance for false positives; it can report that a number is
 prime while it is not.  False negatives are impossible, though.  If it
-reports a number is composite, it is.
+reports a number is composite, it is.  
 
 For this reason, the algorithm comes with an adjustable _accuracy
 parameter_.  By increasing the parameter (and running time) slightly, the
@@ -15,6 +15,10 @@ chance for false positives drops sharply.
 
 You can read about the algorithm at
 http://en.wikipedia.org/wiki/Miller–Rabin_primality_test
+
+The possibility for misreporting a prime but not the opposite classifies
+this as a Monte Carlo algorithm,
+http://en.wikipedia.org/wiki/Monte_carlo_algorithm
 
 I implemented the algorithm purely as a recreational challenge.  The code has big room for improvements; however, it *does* work
 as advertised.
