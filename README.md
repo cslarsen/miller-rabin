@@ -9,6 +9,10 @@ but there is a chance for false positives; it can report that a number is
 prime while it is not.  False negatives are impossible, though.  If it
 reports a number is composite, it is.
 
+For this reason, the algorithm comes with an adjustable _accuracy
+parameter_.  By increasing the parameter (and running time) slightly, the
+chance for false positives drops sharply.
+
 You can read about the algorithm at
 http://en.wikipedia.org/wiki/Miller–Rabin_primality_test
 
