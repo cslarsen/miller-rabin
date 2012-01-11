@@ -23,3 +23,11 @@ static const int DEFAULT_ACCURACY = 4;
  *
  */
 bool isprime(int n, int accuracy = DEFAULT_ACCURACY);
+
+/*
+ * Set which rand function to use and its maximum value.
+ *
+ * If passed a NULL parameter, it will revert back to the default libc
+ * rand().
+ */
+void setrand(int (*rand_function)(void), const int rand_max);

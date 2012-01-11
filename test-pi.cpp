@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <time.h>
 #include "miller-rabin.h"
 
@@ -28,6 +29,16 @@ static int pi(int n)
   return r;
 }
 
+/*
+ * Demonstration on how to use other PRNG functions than rand().
+ */
+static uint64_t randcalls = 0;
+int myrand()
+{
+  ++randcalls;
+  return rand();
+}
+
 int main()
 {
   /*
@@ -37,6 +48,7 @@ int main()
    * in this code).
    */
   srand(time(0));
+  setrand(myrand, RAND_MAX);
 
   printf(
     "Calculating pi(n) by using the Miller-Rabin primality test.\n"
@@ -62,5 +74,6 @@ int main()
     else printf(" --- FAIL, expecteded %d\n", expected[e]);
   }
 
+  printf("\nThe randomization function was called %Lu times\n", randcalls);
   return 0;
 }

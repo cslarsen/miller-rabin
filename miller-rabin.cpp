@@ -15,6 +15,16 @@
 #include <stdint.h> // uint64_t
 
 /*
+ * Which PRNG function to use; libc rand() by default
+ */
+static int (*rand_func)(void) = rand;
+
+/*
+ * Maximum number that rand_func can return.
+ */
+static int rand_max = RAND_MAX;
+
+/*
  * Calculate `a^x mod n´ by using modular exponentiation, preventing
  * overflowing in most cases.
  */
@@ -38,7 +48,7 @@ static uint64_t pow_mod(uint64_t a, uint64_t x, uint64_t n)
  */
 static int rand_between(int a, int b)
 {
-  return a + (int)((float)(b-a+1)*rand()/(RAND_MAX+1.0));
+  return a + (int)((float)(b-a+1)*rand_func()/(rand_max+1.0));
 }
 
 /*
@@ -83,4 +93,21 @@ LOOP:
 
   // n is *probably* prime
   return true;
+}
+
+/*
+ * Set which rand function to use.
+ *
+ * If passed a NULL parameter, it will revert back to the default libc
+ * rand().
+ */
+void setrand(int (*pf)(void), const int rmax)
+{
+  if ( pf != NULL ) {
+    rand_func = pf;
+    rand_max = rmax;
+  } else {
+    rand_func = rand;
+    rand_max = RAND_MAX;
+  }
 }
