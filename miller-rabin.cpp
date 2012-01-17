@@ -13,6 +13,7 @@
 
 #include <stdlib.h> // rand
 #include <stdint.h> // uint64_t
+#include "miller-rabin.h"
 
 /*
  * Which PRNG function to use; libc rand() by default
@@ -46,9 +47,11 @@ static uint64_t pow_mod(uint64_t a, uint64_t x, uint64_t n)
  * should suffice.
  *
  */
-static int rand_between(int a, int b)
+static uint64_t rand_between(uint64_t a, uint64_t b)
 {
-  return a + (int)((float)(b-a+1)*rand_func()/(rand_max+1.0));
+  // Assume rand_func() is 32 bits 
+  uint64_t r = (static_cast<uint64_t>(rand_func())<<32) | rand_func();
+  return a + (uint64_t)((double)(b-a+1)*r/(UINT64_MAX+1.0));
 }
 
 /*
@@ -60,7 +63,7 @@ static int rand_between(int a, int b)
  * The running time should be somewhere around O(k log_3 n).
  *
  */
-bool isprime(int n, int k)
+bool isprime(uint64_t n, int k)
 {
   // Must have ODD n greater than THREE
   if ( n==2 || n==3 ) return true;
@@ -68,13 +71,13 @@ bool isprime(int n, int k)
 
   // Write n-1 as d*2^s by factoring powers of 2 from n-1
   int s = 0;
-  for ( int m = n-1; !(m & 1); ++s, m >>= 1 )
+  for ( uint64_t m = n-1; !(m & 1); ++s, m >>= 1 )
     ; // loop
 
-  int d = (n-1) / (1<<s);
+  uint64_t d = (n-1) / (1<<s);
 
   for ( int i = 0; i < k; ++i ) {
-    int a = rand_between(2, n-2);
+    uint64_t a = rand_between(2, n-2);
     uint64_t x = pow_mod(a,d,n);
 
     if ( x == 1 || x == n-1 )

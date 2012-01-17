@@ -7,6 +7,11 @@
  * Distributed under the modified BSD license
  */
 
+#ifndef INC_MILLER_RABIN_H
+#define INC_MILLER_RABIN_H
+
+#include <stdint.h>
+
 /*
  * Accuracy parameter `k´ of the Miller-Rabin algorithm.
  *
@@ -22,7 +27,7 @@ static const int DEFAULT_ACCURACY = 4;
  * The running time should be somewhere around O(k log_3 n).
  *
  */
-bool isprime(int n, int accuracy = DEFAULT_ACCURACY);
+bool isprime(uint64_t n, int accuracy = DEFAULT_ACCURACY);
 
 /*
  * Set which rand function to use and its maximum value.
@@ -31,3 +36,5 @@ bool isprime(int n, int accuracy = DEFAULT_ACCURACY);
  * rand().
  */
 void setrand(int (*rand_function)(void), const int rand_max);
+
+#endif // INC_MILLER_RABIN_H
