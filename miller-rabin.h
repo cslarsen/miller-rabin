@@ -16,7 +16,7 @@
  * Accuracy parameter `k´ of the Miller-Rabin algorithm.
  *
  */
-static const int DEFAULT_ACCURACY = 4;
+static const int DEFAULT_ACCURACY = 5;
 
 /*
  * The Miller-Rabin probabilistic primality test.
