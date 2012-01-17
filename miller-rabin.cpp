@@ -26,15 +26,20 @@ static int (*rand_func)(void) = rand;
 static int rand_max = RAND_MAX;
 
 /*
- * Calculate `a^x mod n´ by using modular exponentiation, preventing
- * overflowing in most cases.
+ * Fast calculation of `a^x mod n´ by using modular exponentiation.
+ * See http://en.wikipedia.org/wiki/Modular_exponentiation
  */
 static uint64_t pow_mod(uint64_t a, uint64_t x, uint64_t n)
 {
   uint64_t r=1;
 
-  while ( x-- )
-    r = a*r % n;
+  while ( x ) {
+    if ( (x & 1) == 1 )
+      r = a*r % n;
+
+    x >>= 1;
+    a = a*a % n;
+  }
 
   return r;
 }

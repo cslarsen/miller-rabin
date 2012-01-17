@@ -64,9 +64,9 @@ int main()
     "\n"
     "For this run, k = %d\n\n", DEFAULT_ACCURACY);
 
-  int expected[] = {0, 4, 25, 168, 1229, 9592};
+  int expected[] = {0, 4, 25, 168, 1229, 9592, 78498, 664579};
 
-  for ( int n=1, e=0; n<=100000; n*=10, ++e ) {
+  for ( int n=1, e=0; n<=10000000; n*=10, ++e ) {
     int primes = pi(n);
     printf("There are %d primes less than %d", primes, n);
 
