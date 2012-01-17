@@ -26,7 +26,12 @@ static int (*rand_func)(void) = rand;
 static int rand_max = RAND_MAX;
 
 /*
- * Fast calculation of `a^x mod n´ by using modular exponentiation.
+ * Fast calculation of `a^x mod n´ by using right-to-left
+ * binary modular exponentiation.
+ *
+ * This algorithm is taken from Bruce Schneier's book
+ * APPLIED CRYPTOGRAPHY.
+ *
  * See http://en.wikipedia.org/wiki/Modular_exponentiation
  */
 static uint64_t pow_mod(uint64_t a, uint64_t x, uint64_t n)
