@@ -32,7 +32,7 @@ int main(int, char**)
       << rounds << " rounds ... " << flush;
 
     mpz_class n = find_prime(bits, rounds);
-    cout << endl << n << endl;
+    cout << endl << n << endl << endl;
   }
 
   return 0;
