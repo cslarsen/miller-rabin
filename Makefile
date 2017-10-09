@@ -3,7 +3,7 @@ GMPINC := /usr/local/include
 GMPLIB := /usr/local/lib
 
 CXXFLAGS := -W -Wall -O3 -march=native
-TARGETS := miller-rabin.o test-pi bigprimes
+TARGETS := miller-rabin.o test-pi
 
 all: $(TARGETS)
 
