@@ -1,2 +1,4 @@
+*.o
+*.so
+bigprimes
 test-pi
-miller-rabin.o

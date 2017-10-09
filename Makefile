@@ -1,5 +1,9 @@
-CXXFLAGS = -O3 -ffast-math -fomit-frame-pointer
-TARGETS = miller-rabin.o test-pi
+# Paths for gmpxx.h and libgmp*
+GMPINC := /usr/local/include
+GMPLIB := /usr/local/lib
+
+CXXFLAGS := -W -Wall -O3 -march=native
+TARGETS := miller-rabin.o test-pi bigprimes
 
 all: $(TARGETS)
 
@@ -10,3 +14,7 @@ test-pi: miller-rabin.o
 
 clean:
 	rm -f $(TARGETS)
+
+bigprimes: bigprimes.cpp miller-rabin-gmp.cpp 
+	$(CXX) $(CXXFLAGS) -I$(GMPINC) -L$(GMPLIB) \
+		-lgmp -lgmpxx -o$@ $^
